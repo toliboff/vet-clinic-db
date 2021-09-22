@@ -95,3 +95,13 @@ GROUP BY species;
 SELECT species, AVG(escape_attempts) FROM animals
 WHERE date_of_birth BETWEEN '1990-12-31' AND '2000-01-01'
 GROUP BY species;
+
+-- Modify your inserted animals so it includes the species_id value:
+  -- If the name ends in "mon" it will be Digimon
+  UPDATE animals
+  SET species_id=(SELECT id FROM species WHERE name='Digimon')
+  WHERE name LIKE '%mon';
+  -- All other animals are Pokemon
+  UPDATE animals
+  SET species_id=(SELECT id FROM species WHERE name='Pokemon')
+  WHERE name NOT LIKE '%mon';
