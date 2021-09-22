@@ -14,21 +14,3 @@ INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg)
                             ('Boarmon', '06/07/2005', 7, TRUE, 20.4),
                             ('Blossom', '10/13/1998', 3, TRUE, 17);
 
--- Inside a transaction update the animals table by setting the species column to unspecified
-BEGIN;
-  UPDATE animals
-  SET species='unspecified';
-ROLLBACK;
-
--- Inside a transaction:
--- Update the animals table by setting the species column to digimon for all animals that have a name ending in mon.
-BEGIN;
-  UPDATE animals
-  SET species='digimon'
-  WHERE name LIKE '%mon';
-
-  -- Update the animals table by setting the species column to pokemon for all animals that don't have species already set
-  UPDATE animals
-  SET species='pokemon'
-  WHERE COALASCE(species, '')='';
-COMMIT;
