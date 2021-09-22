@@ -44,7 +44,7 @@ BEGIN;
   SET species='pokemon'
   WHERE COALASCE(species, '')='';
 COMMIT;
-
+ SELECT species from animals;
 -- Delete all records in the animals table, then roll back the transaction
 BEGIN;
   DELETE FROM animals;
@@ -79,7 +79,6 @@ SELECT COUNT(*) FROM animals;
 
 -- How many animals have never tried to escape?
 SELECT COUNT(*) FROM animals WHERE escape_attempts=0;
-SELECT COUNT(*) FROM animals WHERE escape_attempts<1;
 
 -- What is the average weight of animals?
 SELECT AVG(weight_kg) as average_weight FROM animals;
