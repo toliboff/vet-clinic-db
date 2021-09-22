@@ -30,6 +30,7 @@ BEGIN;
   UPDATE animals
   SET species='unspecified';
 ROLLBACK;
+SELECT species from animals;
 
 -- Inside a transaction:
 -- Update the animals table by setting the species column to digimon for all animals that have a name ending in mon.
