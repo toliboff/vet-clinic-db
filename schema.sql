@@ -12,3 +12,11 @@ CREATE TABLE animals (
 
 -- Add a column species of type string to your animals table. Modify your schema.sql file.
  ALTER TABLE animals ADD COLUMN species VARCHAR(20);
+
+-- Create a table named owner
+CREATE TABLE owners (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    full_name VARCHAR(50),
+    age INT,
+    PRIMARY KEY(id)
+)
