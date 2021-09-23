@@ -105,3 +105,5 @@ GROUP BY species;
   UPDATE animals
   SET species_id=(SELECT id FROM species WHERE name='Pokemon')
   WHERE name NOT LIKE '%mon';
+
+

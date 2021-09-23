@@ -27,3 +27,29 @@ INSERT INTO owners (full_name, age)
 INSERT INTO species (name) 
                     VALUES  ('Pokemon'),
                             ('Digimon');
+
+  -- Modify your inserted animals to include owner information (owner_id):
+    --Sam Smith owns Agumon.
+    --Jennifer Orwell owns Gabumon and Pikachu.
+    --Bob owns Devimon and Plantmon.
+    --Melody Pond owns Charmander, Squirtle, and Blossom.
+    --Dean Winchester owns Angemon and Boarmon.
+  UPDATE animals
+  SET owner_id=(SELECT id FROM owners WHERE full_name='Sam Smith')
+  WHERE name='Agumon';
+
+  UPDATE animals
+  SET owner_id=(SELECT id FROM owners WHERE full_name='Jennifer Orwell')
+  WHERE name IN('Gabumon', 'Pikachu');
+
+  UPDATE animals
+  SET owner_id=(SELECT id FROM owners WHERE full_name='Bob')
+  WHERE name IN('Devimon', 'Plantmon');
+
+  UPDATE animals
+  SET owner_id=(SELECT id FROM owners WHERE full_name='Melody Pond')
+  WHERE name IN('Charmander', 'Squirtle', 'Blossom');
+  
+  UPDATE animals
+  SET owner_id=(SELECT id FROM owners WHERE full_name='Dean Winchester')
+  WHERE name IN('Angemon', 'Boarmon');
