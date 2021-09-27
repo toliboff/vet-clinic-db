@@ -54,7 +54,6 @@ INSERT INTO species (name)
   SET owner_id=(SELECT id FROM owners WHERE full_name='Dean Winchester')
   WHERE name IN('Angemon', 'Boarmon');
 
-
 -- Insert data into the 'vets' table
 INSERT INTO vets (name, age, date_of_graduation) 
                     VALUES ('William Tatcher',  45, '04-23-2000'),
@@ -135,8 +134,7 @@ INSERT INTO visits (vet_id, animal_id, visited)
                             ((SELECT id FROM vets WHERE name='William Tatcher'),
                             (SELECT id FROM animals WHERE name='Blossom'),
                             '01-11-2021');
-                            
-  -- This will add 3.594.280 visits considering you have 10 animals, 4 vets, and it will use around ~87.000 timestamps (~4min approx.)
+-- This will add 3.594.280 visits considering you have 10 animals, 4 vets, and it will use around ~87.000 timestamps (~4min approx.)
 INSERT INTO visits (vet_id, animal_id, date_of_visit) (SELECT id FROM vets) vets_id, SELECT * FROM (SELECT id FROM animals) animal_id,  generate_series('1980-01-01'::timestamp, '2021-01-01', '4 hours') visit_timestamp;
 
 -- This will add 2.500.000 owners with full_name = 'Owner <X>' and email = 'owner_<X>@email.com' (~2min approx.)
