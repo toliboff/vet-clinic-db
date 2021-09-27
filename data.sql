@@ -53,3 +53,91 @@ INSERT INTO species (name)
   UPDATE animals
   SET owner_id=(SELECT id FROM owners WHERE full_name='Dean Winchester')
   WHERE name IN('Angemon', 'Boarmon');
+
+
+-- Insert data into the 'vets' table
+INSERT INTO vets (name, age, date_of_graduation) 
+                    VALUES ('William Tatcher',  45, '04-23-2000'),
+                           ('Maisy Smith', 26, '01-17-2019'),
+                           ('Stephanie Mendez', 64, '05-04-1981'),
+                           ('Jack Harkness', 38, '06-08-2008');
+
+-- Insert data into the 'specializations' table
+INSERT INTO specializations (vet_id, species_id) 
+                    VALUES ((SELECT id FROM vets WHERE name='William Tatcher'),
+                            (SELECT id FROM species WHERE name='Pokemon')),
+                           ((SELECT id FROM vets WHERE name='Stephanie Mendez'),
+                            (SELECT id FROM species WHERE name='Digimon')),
+                           ((SELECT id FROM vets WHERE name='Stephanie Mendez'),
+                            (SELECT id FROM species WHERE name='Pokemon')),
+                           ((SELECT id FROM vets WHERE name='Jack Harkness'),
+                            (SELECT id FROM species WHERE name='Digimon'));
+                           
+-- Insert the data for visits:
+INSERT INTO visits (vet_id, animal_id, visited) 
+                    VALUES ((SELECT id FROM vets WHERE name='William Tatcher'),
+                            (SELECT id FROM animals WHERE name='Agumon'),
+                            '05-24-2020'),
+                            ((SELECT id FROM vets WHERE name='Stephanie Mendez'),
+                            (SELECT id FROM animals WHERE name='Agumon'),
+                            '04-22-2020'),
+                            ((SELECT id FROM vets WHERE name='Jack Harkness'),
+                            (SELECT id FROM animals WHERE name='Gabumon'),
+                            '02-02-2021'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Pikachu'),
+                            '01-05-2020'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Pikachu'),
+                            '03-08-2020'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Pikachu'),
+                            '05-14-2020'),
+                            ((SELECT id FROM vets WHERE name='Stephanie Mendez'),
+                            (SELECT id FROM animals WHERE name='Devimon'),
+                            '05-04-2021'),
+                            ((SELECT id FROM vets WHERE name='Jack Harkness'),
+                            (SELECT id FROM animals WHERE name='Charmander'),
+                            '02-24-2021'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Plantmon'),
+                            '12-21-2019'),
+                            ((SELECT id FROM vets WHERE name='William Tatcher'),
+                            (SELECT id FROM animals WHERE name='Plantmon'),
+                            '08-10-2020'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Plantmon'),
+                            '04-07-2021'),
+                            ((SELECT id FROM vets WHERE name='Stephanie Mendez'),
+                            (SELECT id FROM animals WHERE name='Squirtle'),
+                            '09-29-2019'),
+                            ((SELECT id FROM vets WHERE name='Jack Harkness'),
+                            (SELECT id FROM animals WHERE name='Angemon'),
+                            '10-03-2020'),
+                            ((SELECT id FROM vets WHERE name='Jack Harkness'),
+                            (SELECT id FROM animals WHERE name='Angemon'),
+                            '11-04-2020'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Boarmon'),
+                            '01-24-2019'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Boarmon'),
+                            '05-15-2019'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Boarmon'),
+                            '02-27-2020'),
+                            ((SELECT id FROM vets WHERE name='Maisy Smith'),
+                            (SELECT id FROM animals WHERE name='Boarmon'),
+                            '08-03-2020'),
+                            ((SELECT id FROM vets WHERE name='Stephanie Mendez'),
+                            (SELECT id FROM animals WHERE name='Blossom'),
+                            '05-24-2020'),
+                            ((SELECT id FROM vets WHERE name='William Tatcher'),
+                            (SELECT id FROM animals WHERE name='Blossom'),
+                            '01-11-2021');
+                            
+  -- This will add 3.594.280 visits considering you have 10 animals, 4 vets, and it will use around ~87.000 timestamps (~4min approx.)
+INSERT INTO visits (vet_id, animal_id, date_of_visit) (SELECT id FROM vets) vets_id, SELECT * FROM (SELECT id FROM animals) animal_id,  generate_series('1980-01-01'::timestamp, '2021-01-01', '4 hours') visit_timestamp;
+
+-- This will add 2.500.000 owners with full_name = 'Owner <X>' and email = 'owner_<X>@email.com' (~2min approx.)
+insert into owners (full_name, email) select 'Owner ' || generate_series(1,2500000), 'owner_' || generate_series(1,2500000) || '@mail.com';
